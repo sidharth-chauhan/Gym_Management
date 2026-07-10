@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
 
   container: {
     flex: 1,
-    backgroundColor: "#F8FAFC",
+    backgroundColor: "white",
   },
 
   content: {
@@ -239,7 +239,7 @@ const styles = StyleSheet.create({
 
   button: {
     height: 55,
-    backgroundColor: "#4F7CFF",
+    backgroundColor: "blue",
     borderRadius: 12,
     justifyContent: "center",
     alignItems: "center",
