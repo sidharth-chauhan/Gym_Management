@@ -1,3 +1,4 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
 import { useState } from "react";
 import {
@@ -9,6 +10,8 @@ import {
   TextInput,
   View,
 } from "react-native";
+import api from "../../api/api";
+import ROUTES from "../../api/routes";
 
 export default function Login() {
 
@@ -16,6 +19,47 @@ export default function Login() {
   const [password,setPassword] = useState("")
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")
+  
+  
+  const handleLogin=async()=>{
+    if(!email || !password) {
+      setError("Please fill in all fields");
+      return;
+    }
+    setLoading(true)
+    setError("")
+    
+    try{
+      
+      const payload={
+        email,
+        password
+      }
+      const response=await api.post(
+        ROUTES.LOGIN,
+        payload
+      )
+      const token=response.data.token
+      await AsyncStorage.setItem("token", token)
+      
+      router.replace("/(tabs)")
+
+    }catch (error: any) {
+
+      console.log(error);
+      console.log(error.code);
+      console.log(error.message);
+      console.log(error.response);
+
+      setError(
+          error.response?.data?.message ||
+          "Something went wrong"
+      );
+    }finally{
+      setLoading(false)
+    }
+
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -80,19 +124,21 @@ export default function Login() {
               </Text>
             </Pressable>
           </View>
-          {
-            error && (
-              <Text style={styles.error}>
-                {error}
-              </Text>
-            )
-          }
+          {!!error && (
+            <Text style={styles.error}>
+              {error}
+            </Text>
+          )}
 
           {/* ---------- Login Button ---------- */}
 
-          <Pressable style={styles.button}>
+          <Pressable 
+            disabled={loading}
+            onPress={handleLogin}
+            style={styles.button}
+          >
             <Text style={styles.buttonText}>
-              Login
+              {loading ? "Loading..." : "Login"}
             </Text>
           </Pressable>
 

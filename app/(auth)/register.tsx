@@ -1,4 +1,5 @@
 import { router } from "expo-router";
+import { useState } from "react";
 import {
   Pressable,
   ScrollView,
@@ -8,8 +9,67 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import api from "../../api/api";
+import ROUTES from "../../api/routes";
 
 export default function Register() {
+
+  const [name,setName]=useState("")
+  const [email,setEmail]=useState("")
+  const [password,setPassword]=useState("")
+  const [phoneNumber,setPhoneNumber]=useState("")
+  const [gymName,setGymName]=useState("")
+  const [address,setAddress]=useState("")
+  const [gymType,setGymType]=useState("")
+
+  const [loading,setLoading]=useState(false)
+  const [error,setError]=useState("")
+
+  const handleRegister=async()=>{
+    
+    if(!name || !email || !password || !phoneNumber || !gymName || !address || !gymType){
+      setError("Please fill in all fields")
+      return
+    }
+    
+
+    setLoading(true)
+    setError("")
+
+    try{
+      const payload={
+        name,
+        email,
+        password,
+        phoneNumber,
+        gymName,
+        address,
+        gymType
+      }
+      const response=await api.post(
+        ROUTES.REGISTER,
+        payload
+      )
+      await router.push("/login")
+
+
+
+    }catch (error: any) {
+      console.log(error);
+      console.log(error.code);
+      console.log(error.message);
+      console.log(error.response);
+
+      setError(
+          error.response?.data?.message ||
+          "Something went wrong"
+      );
+    }finally{
+      setLoading(false)
+    }
+  }
+
+  
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
@@ -36,6 +96,7 @@ export default function Register() {
               <Text style={styles.label}>Owner Name</Text>
 
               <TextInput
+                onChangeText={setName}
                 style={styles.input}
                 placeholder="Enter your full name"
               />
@@ -45,6 +106,7 @@ export default function Register() {
               <Text style={styles.label}>Email Address</Text>
 
               <TextInput
+                onChangeText={setEmail}
                 style={styles.input}
                 placeholder="Enter your email"
                 keyboardType="email-address"
@@ -57,6 +119,7 @@ export default function Register() {
               <Text style={styles.label}>Phone Number</Text>
 
               <TextInput
+                onChangeText={setPhoneNumber}
                 style={styles.input}
                 placeholder="Enter your phone number"
                 keyboardType="phone-pad"
@@ -67,6 +130,7 @@ export default function Register() {
               <Text style={styles.label}>Password</Text>
 
               <TextInput
+                onChangeText={setPassword}
                 style={styles.input}
                 placeholder="Enter your password"
                 secureTextEntry
@@ -77,6 +141,7 @@ export default function Register() {
               <Text style={styles.label}>Gym Name</Text>
 
               <TextInput
+                onChangeText={setGymName}
                 style={styles.input}
                 placeholder="Enter gym name"
               />
@@ -86,6 +151,7 @@ export default function Register() {
               <Text style={styles.label}>Gym Address</Text>
 
               <TextInput
+                onChangeText={setAddress}
                 style={[styles.input, styles.addressInput]}
                 placeholder="Enter gym address"
                 multiline
@@ -95,18 +161,48 @@ export default function Register() {
             <View style={styles.inputContainer}>
               <Text style={styles.label}>Gym Type</Text>
 
-              <Pressable style={styles.dropdown}>
-                <Text style={styles.dropdownText}>
-                  Select Gym Type
-                </Text>
-              </Pressable>
+              <View style={styles.gymTypeContainer}>
+                <Pressable
+                  onPress={() => setGymType("MALE")}
+                  style={[
+                    styles.option,
+                    gymType === "MALE" && styles.selectedOption,
+                  ]}
+                >
+                  <Text>Male</Text>
+                </Pressable>
+
+                <Pressable
+                  onPress={() => setGymType("FEMALE")}
+                  style={[
+                    styles.option,
+                    gymType === "FEMALE" && styles.selectedOption,
+                  ]}
+                >
+                  <Text>Female</Text>
+                </Pressable>
+
+                <Pressable
+                  onPress={() => setGymType("UNISEX")}
+                  style={[
+                    styles.option,
+                    gymType === "UNISEX" && styles.selectedOption,
+                  ]}
+                >
+                  <Text>Unisex</Text>
+                </Pressable>
+              </View>
             </View>
 
           </View>
 
           {/* Register Button */}
 
-          <Pressable style={styles.button}>
+          <Pressable 
+            disabled={loading}
+            onPress={handleRegister}
+            style={styles.button}
+          >
             <Text style={styles.buttonText}>
               Register Gym
             </Text>
@@ -246,6 +342,23 @@ const styles = StyleSheet.create({
     color: "#2563EB",
     fontSize: 15,
     fontWeight: "700",
+  },
+  gymTypeContainer: {
+    flexDirection: "row",
+    gap: 10,
+  },
+
+  option: {
+    flex: 1,
+    borderWidth: 1,
+    borderColor: "#D1D5DB",
+    paddingVertical: 12,
+    borderRadius: 10,
+    alignItems: "center",
+  },
+  selectedOption: {
+    backgroundColor: "#4F7CFF",
+    borderColor: "#4F7CFF",
   },
 
 });
