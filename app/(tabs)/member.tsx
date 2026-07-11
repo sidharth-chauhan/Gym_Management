@@ -1,15 +1,56 @@
 import { Ionicons } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useEffect, useState } from "react";
 import {
+  FlatList,
   Pressable,
   SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
   TextInput,
-  View,
+  View
 } from "react-native";
 
+import api from "../../api/api";
+import ROUTES from "../../api/routes";
+
 const Member = () => {
+
+  const [member,setMember]=useState([])
+  const [loading,setLoading]=useState(false)
+
+  const handleMember=async()=>{
+    setLoading(true)
+    const token=await AsyncStorage.getItem("token")
+    try{
+      const dataMember=await api.get(
+        ROUTES.MEMBER,
+        {
+          headers:{
+            Authorization:`Bearer ${token}`
+          }
+        }
+      )
+      
+      setMember(dataMember.data.data)
+      console.log("member:- ",member)
+    }catch (error) {
+      console.log(error);
+    }finally{
+      setLoading(false)
+    }
+  }
+  useEffect(()=>{
+    handleMember()
+  })
+
+
+
+
+
+
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
@@ -62,52 +103,57 @@ const Member = () => {
         </View>
 
         {/* Member */}
+        <FlatList
+          data={member}
+          keyExtractor={(item)=>item.memberId}
+          renderItem={({item})=>(
+            <Pressable style={styles.memberCard}>
 
-        <Pressable style={styles.memberCard}>
+              <View style={styles.avatar}>
+                <Ionicons
+                  name="person"
+                  size={28}
+                  color="#2563EB"
+                />
+              </View>
 
-          <View style={styles.avatar}>
-            <Ionicons
-              name="person"
-              size={28}
-              color="#2563EB"
-            />
-          </View>
+              <View style={styles.memberInfo}>
 
-          <View style={styles.memberInfo}>
+                <Text style={styles.memberName}>
+                  {item?.name}
+                </Text>
 
-            <Text style={styles.memberName}>
-              Aman Kumar
-            </Text>
+                <Text style={styles.memberDetail}>
+                  {item?.membershipPlanName}
+                </Text>
 
-            <Text style={styles.memberDetail}>
-              Gold Membership
-            </Text>
+                <Text style={styles.memberDetail}>
+                  Trainer : {item?.trainerIdName}
+                </Text>
 
-            <Text style={styles.memberDetail}>
-              Trainer : Rahul Sharma
-            </Text>
+                <Text style={styles.memberDetail}>
+                  Phone no: {item?.phoneNumber}
+                </Text>
 
-            <Text style={styles.memberDetail}>
-              9876543210
-            </Text>
+              </View>
 
-          </View>
+              <View style={styles.rightSection}>
 
-          <View style={styles.rightSection}>
+                <Text style={styles.active}>
+                  ACTIVE
+                </Text>
 
-            <Text style={styles.active}>
-              ACTIVE
-            </Text>
+                <Ionicons
+                  name="chevron-forward"
+                  size={22}
+                  color="#94A3B8"
+                />
 
-            <Ionicons
-              name="chevron-forward"
-              size={22}
-              color="#94A3B8"
-            />
+              </View>
 
-          </View>
-
-        </Pressable>
+            </Pressable>
+          )}
+        />
 
         {/* Copy this card 3-4 times for now */}
 

@@ -1,4 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useEffect, useState } from "react";
 import {
   Pressable,
   SafeAreaView,
@@ -7,8 +9,49 @@ import {
   Text,
   View,
 } from "react-native";
+import api from "../../api/api";
+import ROUTES from "../../api/routes";
 
 const Index = () => {
+  const [dashboard, setDashboard] = useState([])
+  const [profile,setProfile] = useState([])
+  const [loading, setLoading] = useState(false)
+
+   const fetchDashborad=async()=>{
+    setLoading(true)
+    const token=await AsyncStorage.getItem("token")
+    try{
+      const response=await api.get(
+        ROUTES.DASHBOARD,
+        {
+          headers:{
+            Authorization:`Bearer ${token}`
+          }
+        }
+      )
+      const response2=await api.get(
+        ROUTES.PROFILE,
+        {
+          headers:{
+            Authorization:`Bearer ${token}`
+          }
+        }
+      )
+      setDashboard(response.data)
+      setProfile(response2.data)
+      console.log("profile",profile)
+      console.log("dashboard",dashboard)
+
+    }catch (error) {
+      console.log(error);
+    }finally{
+      setLoading(false)
+    }
+   }
+   useEffect(()=>{
+    fetchDashborad()
+   },[])
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
@@ -40,7 +83,7 @@ const Index = () => {
           <Text style={styles.welcomeText}>Welcome Back 👋</Text>
 
           <Text style={styles.gymName}>
-            Sidharth Fitness Club
+            {profile?.user?.gymName}
           </Text>
 
           <Text style={styles.subtitle}>
@@ -65,7 +108,9 @@ const Index = () => {
               />
             </View>
 
-            <Text style={styles.statNumber}>120</Text>
+            <Text style={styles.statNumber}>
+              {dashboard?.data?.membersCount}
+            </Text>
 
             <Text style={styles.statLabel}>
               Members
@@ -81,7 +126,9 @@ const Index = () => {
               />
             </View>
 
-            <Text style={styles.statNumber}>8</Text>
+            <Text style={styles.statNumber}>
+              {dashboard?.data?.trainersCount}
+            </Text>
 
             <Text style={styles.statLabel}>
               Trainers
@@ -101,7 +148,9 @@ const Index = () => {
               />
             </View>
 
-            <Text style={styles.statNumber}>4</Text>
+            <Text style={styles.statNumber}>
+              {dashboard?.data?.membershipsCount}
+            </Text>
 
             <Text style={styles.statLabel}>
               Memberships
@@ -118,7 +167,7 @@ const Index = () => {
             </View>
 
             <Text style={styles.statNumber}>
-              ₹45K
+              {dashboard?.data?.totalRevenue}
             </Text>
 
             <Text style={styles.statLabel}>
@@ -131,7 +180,7 @@ const Index = () => {
         {/* ================= REVENUE ================= */}
 
         <Text style={styles.sectionTitle}>
-          Monthly Revenue
+          Total Revenue
         </Text>
 
         <View style={styles.revenueCard}>
@@ -142,7 +191,7 @@ const Index = () => {
             </Text>
 
             <Text style={styles.revenueAmount}>
-              ₹45,000
+              {dashboard?.data?.totalRevenue}
             </Text>
           </View>
 
@@ -154,7 +203,7 @@ const Index = () => {
             />
 
             <Text style={styles.growthText}>
-              +12%
+              
             </Text>
           </View>
 
