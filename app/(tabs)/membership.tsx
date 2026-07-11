@@ -1,5 +1,8 @@
 import { Ionicons } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useEffect, useState } from "react";
 import {
+  FlatList,
   Pressable,
   SafeAreaView,
   ScrollView,
@@ -8,8 +11,40 @@ import {
   TextInput,
   View
 } from "react-native";
+import api from "../../api/api";
+import ROUTES from "../../api/routes";
 
 const Membership = () => {
+  const [loading,setLoading]=useState(false)
+  const [membership,setMembership]=useState([])
+  const handleMembership=async()=>{
+    setLoading(true)
+    try{
+      const token =await AsyncStorage.getItem("token")
+      const response=await api.get(
+        ROUTES.GETMEMBERSHIP,
+        {
+          headers:{
+            Authorization:`Bearer ${token}`
+          }
+        }
+      )
+      console.log("membership:- ",response.data.data)
+      setMembership(response.data.data)
+
+
+
+    }catch (error) {
+      console.log(error);
+    }finally{
+      setLoading(false)
+
+    }
+  }
+
+  useEffect(()=>{
+    handleMembership()
+  },[])
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
@@ -62,46 +97,51 @@ const Membership = () => {
         </View>
 
         {/* Membership Card */}
+        <FlatList
+          data={membership}
+          keyExtractor={(item)=>item.membershipId}
+          renderItem={({item})=>(
+            <Pressable style={styles.planCard}>
 
-        <Pressable style={styles.planCard}>
+              <View style={styles.planIcon}>
 
-          <View style={styles.planIcon}>
+                <Ionicons
+                  name="card"
+                  size={30}
+                  color="#2563EB"
+                />
 
-            <Ionicons
-              name="card"
-              size={30}
-              color="#2563EB"
-            />
+              </View>
 
-          </View>
+              <View style={styles.planInfo}>
 
-          <View style={styles.planInfo}>
+                <Text style={styles.planName}>
+                  {item?.planName}
+                </Text>
 
-            <Text style={styles.planName}>
-              Gold Membership
-            </Text>
+                <Text style={styles.planDetail}>
+                  Duration : {item?.durationInMonth} months
+                </Text>
 
-            <Text style={styles.planDetail}>
-              Duration : 12 Months
-            </Text>
+                <Text style={styles.planDetail}>
+                  Price : ₹{item?.price}
+                </Text>
 
-            <Text style={styles.planDetail}>
-              Price : ₹12,000
-            </Text>
+                <Text style={styles.planDetail}>
+                  Active Members : {item?.membersCount}
+                </Text>
 
-            <Text style={styles.planDetail}>
-              Active Members : 35
-            </Text>
+              </View>
 
-          </View>
+              <Ionicons
+                name="chevron-forward"
+                size={22}
+                color="#94A3B8"
+              />
 
-          <Ionicons
-            name="chevron-forward"
-            size={22}
-            color="#94A3B8"
-          />
-
-        </Pressable>
+            </Pressable>
+          )}
+        />
 
         {/* Copy this card 3-4 times */}
 

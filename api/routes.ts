@@ -9,6 +9,8 @@ const ROUTES={
   DASHBOARD: "/api/gym/dashboard",
   PROFILE:"/api/gym/profile",
   MEMBER:"/api/gym/members",
+  GETMEMBERSHIP: "/api/gym/memberships",
+  GETTRAINER: "/api/gym/trainers",
 }
 
 export default ROUTES

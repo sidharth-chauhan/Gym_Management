@@ -1,5 +1,8 @@
 import { Ionicons } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useEffect, useState } from "react";
 import {
+  FlatList,
   Pressable,
   SafeAreaView,
   ScrollView,
@@ -8,8 +11,41 @@ import {
   TextInput,
   View
 } from "react-native";
+import api from "../../api/api";
+import ROUTES from "../../api/routes";
 
 const Trainer = () => {
+  const [loading,setLoading]=useState(false)
+  const[trainer,setTrainer]=useState([])
+  const handleTrainer=async()=>{
+    setLoading(true)
+    const token = await AsyncStorage.getItem("token")
+    try{
+      const response=await api.get(
+        ROUTES.GETTRAINER,
+        {
+          headers:{
+            Authorization:`Bearer ${token}`
+          }
+        }
+      )
+      console.log("trainer:- ",response.data.data)
+      setTrainer(response.data.data)
+
+    }catch(error){
+      console.log(error);
+
+    }finally{
+      setLoading(false)
+    }
+  }
+
+
+  useEffect(()=>{
+    handleTrainer()
+  },[])
+
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
@@ -62,52 +98,58 @@ const Trainer = () => {
         </View>
 
         {/* Trainer Card */}
+        <FlatList
+          data={trainer}
+          keyExtractor={(item) => item.trainerId}
+          renderItem={({item})=>(
+            <Pressable style={styles.trainerCard}>
 
-        <Pressable style={styles.trainerCard}>
+              <View style={styles.avatar}>
+                <Ionicons
+                  name="barbell"
+                  size={28}
+                  color="#2563EB"
+                />
+              </View>
 
-          <View style={styles.avatar}>
-            <Ionicons
-              name="barbell"
-              size={28}
-              color="#2563EB"
-            />
-          </View>
+              <View style={styles.trainerInfo}>
 
-          <View style={styles.trainerInfo}>
+                <Text style={styles.trainerName}>
+                  {item?.name}
+                </Text>
 
-            <Text style={styles.trainerName}>
-              Rahul Sharma
-            </Text>
+                <Text style={styles.detail}>
+                  Experience : {item?.experienceInMonth} Months
+                </Text>
 
-            <Text style={styles.detail}>
-              Experience : 5 Years
-            </Text>
+                <Text style={styles.detail}>
+                  Specialization : {item?.specialization}
+                </Text>
 
-            <Text style={styles.detail}>
-              Specialization : Weight Loss
-            </Text>
+                <Text style={styles.detail}>
+                  +91 {item?.phoneNumber}
+                </Text>
 
-            <Text style={styles.detail}>
-              9876543210
-            </Text>
+              </View>
 
-          </View>
+              <View style={styles.rightSection}>
 
-          <View style={styles.rightSection}>
+                <Text style={styles.memberCount}>
+                  {item?.membersCount}
+                </Text>
 
-            <Text style={styles.memberCount}>
-              12 Members
-            </Text>
+                <Ionicons
+                  name="chevron-forward"
+                  size={22}
+                  color="#94A3B8"
+                />
 
-            <Ionicons
-              name="chevron-forward"
-              size={22}
-              color="#94A3B8"
-            />
+              </View>
 
-          </View>
-
-        </Pressable>
+            </Pressable>
+        
+          )}
+        />
 
         {/* Copy this card 3-4 times */}
 

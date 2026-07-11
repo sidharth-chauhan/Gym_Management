@@ -132,7 +132,7 @@ const Member = () => {
                 </Text>
 
                 <Text style={styles.memberDetail}>
-                  Phone no: {item?.phoneNumber}
+                  Phone no: +91 {item?.phoneNumber}
                 </Text>
 
               </View>
