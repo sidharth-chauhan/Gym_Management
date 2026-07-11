@@ -43,7 +43,7 @@ const Member = () => {
   }
   useEffect(()=>{
     handleMember()
-  })
+  },[])
 
 
 
