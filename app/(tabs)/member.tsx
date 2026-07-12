@@ -12,6 +12,7 @@ import {
   View
 } from "react-native";
 
+import { router } from "expo-router";
 import api from "../../api/api";
 import ROUTES from "../../api/routes";
 
@@ -74,11 +75,15 @@ const Member = () => {
             Members
           </Text>
 
-          <Pressable style={styles.iconButton}>
+          <Pressable 
+            onPress={()=>{
+              router.push("/member/add")
+            }}
+            style={styles.iconButton}>
             <Ionicons
               name="add"
               size={28}
-              color="#2563EB"
+              color="2563EB"
             />
           </Pressable>
 
@@ -107,7 +112,8 @@ const Member = () => {
           data={member}
           keyExtractor={(item)=>item.memberId}
           renderItem={({item})=>(
-            <Pressable style={styles.memberCard}>
+            <Pressable 
+              style={styles.memberCard}>
 
               <View style={styles.avatar}>
                 <Ionicons

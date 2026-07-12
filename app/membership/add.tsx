@@ -1,0 +1,234 @@
+import { Ionicons } from "@expo/vector-icons";
+import {
+  Pressable,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  View
+} from "react-native";
+
+const AddMembership = () => {
+  return (
+    <SafeAreaView style={styles.container}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ paddingBottom: 40 }}
+      >
+        {/* Header */}
+
+        <View style={styles.header}>
+
+          <Pressable style={styles.backButton}>
+            <Ionicons
+              name="arrow-back"
+              size={22}
+              color="#2563EB"
+            />
+          </Pressable>
+
+          <Text style={styles.headerTitle}>
+            Add Membership
+          </Text>
+
+          <View style={{ width: 42 }} />
+
+        </View>
+
+        {/* Form */}
+
+        <View style={styles.formContainer}>
+
+          <Text style={styles.sectionTitle}>
+            Membership Information
+          </Text>
+
+          {/* Plan Name */}
+
+          <View style={styles.inputContainer}>
+            <Text style={styles.label}>
+              Plan Name
+            </Text>
+
+            <TextInput
+              placeholder="Gold Membership"
+              style={styles.input}
+            />
+          </View>
+
+          {/* Duration */}
+
+          <View style={styles.inputContainer}>
+            <Text style={styles.label}>
+              Duration (Months)
+            </Text>
+
+            <TextInput
+              placeholder="12"
+              keyboardType="numeric"
+              style={styles.input}
+            />
+          </View>
+
+          {/* Price */}
+
+          <View style={styles.inputContainer}>
+            <Text style={styles.label}>
+              Price (₹)
+            </Text>
+
+            <TextInput
+              placeholder="3000"
+              keyboardType="numeric"
+              style={styles.input}
+            />
+          </View>
+
+          {/* Button */}
+
+          <Pressable style={styles.button}>
+
+            <Text style={styles.buttonText}>
+              Add Membership
+            </Text>
+
+          </Pressable>
+
+        </View>
+
+      </ScrollView>
+    </SafeAreaView>
+  );
+};
+
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#F8FAFC",
+  },
+
+  /* ================= HEADER ================= */
+
+  header: {
+    marginTop: 15,
+    marginHorizontal: 20,
+
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+
+  backButton: {
+    width: 42,
+    height: 42,
+
+    borderRadius: 21,
+
+    backgroundColor: "#FFFFFF",
+
+    justifyContent: "center",
+    alignItems: "center",
+
+    elevation: 3,
+
+    shadowColor: "#000",
+    shadowOpacity: 0.08,
+    shadowRadius: 5,
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+  },
+
+  headerTitle: {
+    fontSize: 24,
+    fontWeight: "700",
+    color: "#1E293B",
+  },
+
+  /* ================= FORM ================= */
+
+  formContainer: {
+    marginTop: 30,
+    marginHorizontal: 20,
+  },
+
+  sectionTitle: {
+    fontSize: 22,
+    fontWeight: "700",
+    color: "#1E293B",
+    marginBottom: 25,
+  },
+
+  inputContainer: {
+    marginBottom: 18,
+  },
+
+  label: {
+    fontSize: 15,
+    fontWeight: "600",
+    color: "#334155",
+    marginBottom: 8,
+  },
+
+  input: {
+    height: 55,
+
+    backgroundColor: "#FFFFFF",
+
+    borderRadius: 14,
+
+    paddingHorizontal: 15,
+
+    fontSize: 16,
+
+    color: "#111827",
+
+    elevation: 2,
+
+    shadowColor: "#000",
+    shadowOpacity: 0.05,
+    shadowRadius: 4,
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+  },
+
+  /* ================= BUTTON ================= */
+
+  button: {
+    marginTop: 35,
+
+    height: 55,
+
+    backgroundColor: "#2563EB",
+
+    borderRadius: 14,
+
+    justifyContent: "center",
+    alignItems: "center",
+
+    elevation: 3,
+
+    shadowColor: "#2563EB",
+    shadowOpacity: 0.3,
+    shadowRadius: 6,
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+  },
+
+  buttonText: {
+    fontSize: 18,
+    fontWeight: "700",
+    color: "#FFFFFF",
+  },
+});
+
+
+
+export default AddMembership;
