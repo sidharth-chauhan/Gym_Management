@@ -1,4 +1,7 @@
 import { Ionicons } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { router } from "expo-router";
+import { useState } from "react";
 import {
   Pressable,
   SafeAreaView,
@@ -8,8 +11,46 @@ import {
   TextInput,
   View
 } from "react-native";
+import api from "../../api/api";
+import ROUTES from "../../api/routes";
 
 const AddMembership = () => {
+  const [loading,setLoading]=useState(false)
+  const [planName,setPlanName]=useState("")
+  const [duration,setDuration]=useState(0)
+  const [price,setPrice]=useState(0)
+  
+
+  
+
+  const handleMembership=async()=>{
+    const token=await AsyncStorage.getItem("token")
+    setLoading(true)
+    try{
+      const payload={
+        planName,
+        durationInMonth: Number(duration),
+        price: Number(price)
+      }
+      console.log("payload:- ",payload)
+      const response=await api.post(
+        ROUTES.ADDMEMBERSHIP,
+        payload,
+        {
+          headers:{
+            Authorization:`Bearer ${token}`
+          }
+        }
+      )
+      console.log("response:- ",response.data.data)
+      router.replace("/(tabs)/membership")
+      
+    }catch(error: any){
+      console.log(error.response?.data);
+    }finally{
+      setLoading(false)
+    }
+  }
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
@@ -52,6 +93,8 @@ const AddMembership = () => {
             </Text>
 
             <TextInput
+              value={planName}
+              onChangeText={setPlanName}
               placeholder="Gold Membership"
               style={styles.input}
             />
@@ -65,7 +108,9 @@ const AddMembership = () => {
             </Text>
 
             <TextInput
-              placeholder="12"
+              value={duration}
+              onChangeText={setDuration}
+              placeholder="enter duration in months"
               keyboardType="numeric"
               style={styles.input}
             />
@@ -79,7 +124,9 @@ const AddMembership = () => {
             </Text>
 
             <TextInput
-              placeholder="3000"
+              value={price}
+              onChangeText={setPrice}
+              placeholder="enter price in ₹"
               keyboardType="numeric"
               style={styles.input}
             />
@@ -87,7 +134,9 @@ const AddMembership = () => {
 
           {/* Button */}
 
-          <Pressable style={styles.button}>
+          <Pressable 
+            style={styles.button}
+            onPress={handleMembership}>
 
             <Text style={styles.buttonText}>
               Add Membership

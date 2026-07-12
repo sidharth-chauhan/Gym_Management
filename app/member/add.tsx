@@ -72,7 +72,7 @@ const AddMember = () => {
       router.replace("/(tabs)")
 
     }catch(error: any){
-      console.log(error);
+      console.log(error.response?.data);
     }finally{
       setLoading(false)
     }

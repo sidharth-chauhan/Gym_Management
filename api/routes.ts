@@ -12,7 +12,8 @@ const ROUTES={
   GETMEMBERSHIP: "/api/gym/memberships",
   GETTRAINER: "/api/gym/trainers",
 
-  ADDMEMBER: "/api/gym/members"
+  ADDMEMBER: "/api/gym/members",
+  ADDMEMBERSHIP: "/api/gym/memberships",
 }
 
 export default ROUTES
