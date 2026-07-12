@@ -17,8 +17,8 @@ import ROUTES from "../../api/routes";
 const AddMembership = () => {
   const [loading,setLoading]=useState(false)
   const [planName,setPlanName]=useState("")
-  const [duration,setDuration]=useState(0)
-  const [price,setPrice]=useState(0)
+  const [duration,setDuration]=useState("")
+  const [price,setPrice]=useState("")
   
 
   
@@ -110,7 +110,7 @@ const AddMembership = () => {
             <TextInput
               value={duration}
               onChangeText={setDuration}
-              placeholder="enter duration in months"
+              placeholder="Duration"
               keyboardType="numeric"
               style={styles.input}
             />
@@ -126,7 +126,7 @@ const AddMembership = () => {
             <TextInput
               value={price}
               onChangeText={setPrice}
-              placeholder="enter price in ₹"
+              placeholder="Price"
               keyboardType="numeric"
               style={styles.input}
             />

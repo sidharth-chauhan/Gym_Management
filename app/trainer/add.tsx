@@ -1,4 +1,7 @@
 import { Ionicons } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { router } from "expo-router";
+import { useState } from "react";
 import {
   Pressable,
   SafeAreaView,
@@ -8,8 +11,53 @@ import {
   TextInput,
   View
 } from "react-native";
+import api from "../../api/api";
+import ROUTES from "../../api/routes";
 
 const AddTrainer = () => {
+
+  const [loading, setLoading] = useState(false);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [experienceInMonth, setExperienceInMonth] = useState("");
+  const [specialization, setSpecialization] = useState("");
+
+
+  const handleTrainer=async()=>{
+    setLoading(true)
+    const token = await AsyncStorage.getItem("token")
+    try{
+      const payload={
+        name,
+        email,
+        password,
+        phoneNumber,
+        experienceInMonth: Number(experienceInMonth),
+        specialization
+      }
+      console.log("payload:- ",payload)
+      const response=await api.post(
+        ROUTES.AddTRAINER,
+        payload,
+        {
+          headers:{
+            Authorization:`Bearer ${token}`
+          }
+        }
+      )
+      console.log("Trainer added successfully")
+      console.log("response:- ",response.data.data)
+      router.replace("/(tabs)/trainer")
+
+    }catch (error: any) {
+      console.log(error.response?.data);
+    }finally{
+      setLoading(false)
+    }
+  }
+  
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
@@ -50,6 +98,8 @@ const AddTrainer = () => {
             <Text style={styles.label}>Name</Text>
 
             <TextInput
+              value={name}
+              onChangeText={setName}
               placeholder="Enter trainer name"
               style={styles.input}
             />
@@ -61,6 +111,8 @@ const AddTrainer = () => {
             <Text style={styles.label}>Email</Text>
 
             <TextInput
+              value={email}
+              onChangeText={setEmail}
               placeholder="Enter email"
               keyboardType="email-address"
               style={styles.input}
@@ -73,6 +125,8 @@ const AddTrainer = () => {
             <Text style={styles.label}>Password</Text>
 
             <TextInput
+              value={password}
+              onChangeText={setPassword}
               placeholder="Enter password"
               secureTextEntry
               style={styles.input}
@@ -85,6 +139,8 @@ const AddTrainer = () => {
             <Text style={styles.label}>Phone Number</Text>
 
             <TextInput
+              value={phoneNumber}
+              onChangeText={setPhoneNumber}
               placeholder="9876543210"
               keyboardType="phone-pad"
               style={styles.input}
@@ -97,6 +153,8 @@ const AddTrainer = () => {
             <Text style={styles.label}>Experience (Months)</Text>
 
             <TextInput
+              value={experienceInMonth}
+              onChangeText={setExperienceInMonth}
               placeholder="24"
               keyboardType="numeric"
               style={styles.input}
@@ -109,6 +167,8 @@ const AddTrainer = () => {
             <Text style={styles.label}>Specialization</Text>
 
             <TextInput
+              value={specialization}
+              onChangeText={setSpecialization}
               placeholder="Weight Training"
               style={styles.input}
             />
@@ -116,7 +176,10 @@ const AddTrainer = () => {
 
           {/* Button */}
 
-          <Pressable style={styles.button}>
+          <Pressable 
+            onPress={handleTrainer}
+            style={styles.button}
+          >
 
             <Text style={styles.buttonText}>
               Add Trainer
