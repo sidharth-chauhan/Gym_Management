@@ -1,45 +1,43 @@
 # 🏋️ Gym Management System - Frontend
 
-A modern **Gym Management System Mobile Application** built using **React Native (Expo)**.
-
-The application allows gym owners to efficiently manage their gym by handling members, trainers, memberships, and viewing dashboard analytics through an intuitive mobile interface.
+A modern **Gym Management System** mobile application built using **React Native (Expo)**. This application enables gym owners to efficiently manage members, trainers, membership plans, and monitor gym statistics through a clean and user-friendly interface.
 
 ---
 
-# ✨ Features
+# 📱 Features
 
-## 🔐 Authentication
+### 🔐 Authentication
 
-- Owner Registration
+- Gym Owner Registration
 - Secure Login
 - JWT Authentication
-- Logout
 - Persistent Login using AsyncStorage
+- Logout
 
 ---
 
-## 📊 Dashboard
+### 📊 Dashboard
 
 - Total Members
 - Total Trainers
 - Total Membership Plans
 - Total Revenue
-- Quick Navigation
+- Clean Analytics Dashboard
 
 ---
 
-## 👥 Member Management
+### 👥 Member Management
 
 - View Members
-- Add Member
+- Add New Member
 - Assign Trainer
-- Assign Membership
+- Assign Membership Plan
 - Select Date of Birth
-- Responsive Form Validation
+- Form Validation
 
 ---
 
-## 💪 Trainer Management
+### 💪 Trainer Management
 
 - View Trainers
 - Add Trainer
@@ -48,28 +46,28 @@ The application allows gym owners to efficiently manage their gym by handling me
 
 ---
 
-## 🏆 Membership Management
+### 🏆 Membership Management
 
 - View Membership Plans
-- Add Membership
+- Add Membership Plan
 - Duration
 - Price
 
 ---
 
-## 📱 Modern UI
+### 🎨 UI Features
 
-- Responsive Design
-- Professional Cards
+- Modern UI Design
+- Responsive Layout
 - FlatList
-- Search Ready
 - Dropdown Selection
 - Date Picker
 - Loading States
+- Form Validation
 
 ---
 
-# 🛠 Tech Stack
+# 🚀 Tech Stack
 
 - React Native
 - Expo
@@ -82,7 +80,7 @@ The application allows gym owners to efficiently manage their gym by handling me
 
 ---
 
-# 📂 Folder Structure
+# 📂 Project Structure
 
 ```text
 app
@@ -117,94 +115,76 @@ api
 
 ---
 
-# 📱 Screens
-
-- Login
-- Register
-- Dashboard
-- Members
-- Add Member
-- Trainers
-- Add Trainer
-- Memberships
-- Add Membership
-
----
-
-# 🖼️ Screenshots
+# 📸 Screenshots
 
 ## Login
 
-![Login](./assets/login.png)
-
----
-
-## Register
-
-![Register](./assets/register.png)
+![](./assets/sample_image/1.pmg.png)
 
 ---
 
 ## Dashboard
 
-![Dashboard](./assets/dashboard.png)
+![](./assets/sample_image/2.png)
 
 ---
 
 ## Members
 
-![Members](./assets/members.png)
-
----
-
-## Add Member
-
-![Add Member](./assets/add-member.png)
+![](./assets/sample_image/3.png)
 
 ---
 
 ## Trainers
 
-![Trainers](./assets/trainers.png)
+![](./assets/sample_image/4.png)
 
 ---
 
-## Add Trainer
+## More Screens
 
-![Add Trainer](./assets/add-trainer.png)
-
----
-
-## Memberships
-
-![Memberships](./assets/memberships.png)
+![](./assets/sample_image/image.png)
 
 ---
 
-## Add Membership
+![](./assets/sample_image/image%20copy.png)
 
-![Add Membership](./assets/add-membership.png)
+---
+
+![](./assets/sample_image/image%20copy%202.png)
+
+---
+
+![](./assets/sample_image/image%20copy%203.png)
+
+---
+
+![](./assets/sample_image/image%20copy%204.png)
 
 ---
 
 # 🎥 Demo
 
-Add your demo GIF or YouTube video here.
+A complete application demo showcasing:
 
-Example
+- Authentication
+- Dashboard
+- Member Management
+- Trainer Management
+- Membership Management
+- Add Forms
+- Navigation
 
-```
-https://youtu.be/your-demo-video
-```
+_(Demo video will be added soon.)_
 
 ---
 
-# 🚀 Quick Start
+# ⚙️ Getting Started
 
 ## Clone Repository
 
 ```bash
-git clone https://github.com/yourusername/Gym_Management_Frontend.git
+git clone https://github.com/sidharth-chauhan/Gym_Management.git
 ```
 
 ---
@@ -241,9 +221,9 @@ npx expo run:ios
 
 ---
 
-# ⚙️ Environment Configuration
+# 🔧 Backend Configuration
 
-Update your backend URL inside
+Update the backend URL inside
 
 ```text
 api/api.ts
@@ -257,35 +237,51 @@ const api = axios.create({
 });
 ```
 
-For Android Emulator
+### Android Emulator
 
-```text
+```
 http://10.0.2.2:3000/api
 ```
 
-For Physical Device
+### Physical Device
 
-```text
+```
 http://YOUR_WIFI_IP:3000/api
 ```
 
 ---
 
-# 🔑 Authentication
+# 🔐 Authentication
 
-JWT Token is securely stored using
+JWT Token is securely stored using **AsyncStorage**.
 
-- AsyncStorage
+Every protected API request automatically sends:
 
-Every protected request automatically sends
-
-```http
+```
 Authorization: Bearer <JWT_TOKEN>
 ```
 
 ---
 
-# 🌟 Future Improvements
+# 📚 What I Learned
+
+- React Native
+- Expo Router
+- TypeScript
+- REST API Integration
+- JWT Authentication
+- AsyncStorage
+- Axios
+- FlatList
+- Dropdown Implementation
+- Date Picker
+- Form Handling
+- Navigation
+- Mobile UI Design
+
+---
+
+# 🚀 Future Improvements
 
 - Edit Member
 - Delete Member
@@ -298,39 +294,16 @@ Authorization: Bearer <JWT_TOKEN>
 - Pagination
 - Charts
 - Push Notifications
-- Dark Mode
 - Docker Deployment
 - AWS Deployment
 
 ---
 
-# 📚 Learning Outcomes
+# 🔗 Backend Repository
 
-Through this project I learned
+Backend API for this project:
 
-- React Native
-- Expo Router
-- TypeScript
-- API Integration
-- JWT Authentication
-- AsyncStorage
-- FlatList
-- useEffect
-- useState
-- Axios
-- Navigation
-- Form Handling
-- Dropdown Implementation
-- Date Picker Integration
-- Backend Communication
-
----
-
-# 👨‍💻 Backend Repository
-
-```
-https://github.com/yourusername/Gym_Management_Backend
-```
+**https://github.com/sidharth-chauhan/Gym_Management_Api**
 
 ---
 
@@ -338,14 +311,12 @@ https://github.com/yourusername/Gym_Management_Backend
 
 **Sidharth Chauhan**
 
-B.Tech Student
+GitHub:
+https://github.com/sidharth-chauhan
 
-Aspiring Backend Engineer
-
-GitHub: https://github.com/yourusername
-
-LinkedIn: https://linkedin.com/in/yourusername
+LinkedIn:
+https://www.linkedin.com/in/sidharth-chauhan-8a010229a/
 
 ---
 
-## ⭐ If you like this project, consider giving it a Star!
+⭐ If you found this project helpful, consider giving it a **Star**.
