@@ -141,7 +141,7 @@ const AddTrainer = () => {
             <TextInput
               value={phoneNumber}
               onChangeText={setPhoneNumber}
-              placeholder="9876543210"
+              placeholder="Enter ph no."
               keyboardType="phone-pad"
               style={styles.input}
             />
@@ -155,7 +155,7 @@ const AddTrainer = () => {
             <TextInput
               value={experienceInMonth}
               onChangeText={setExperienceInMonth}
-              placeholder="24"
+              placeholder="Enter experience"
               keyboardType="numeric"
               style={styles.input}
             />
