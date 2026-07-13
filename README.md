@@ -1,56 +1,351 @@
-# Welcome to your Expo app 👋
+# 🏋️ Gym Management System - Frontend
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A modern **Gym Management System Mobile Application** built using **React Native (Expo)**.
 
-## Get started
+The application allows gym owners to efficiently manage their gym by handling members, trainers, memberships, and viewing dashboard analytics through an intuitive mobile interface.
 
-1. Install dependencies
+---
 
-   ```bash
-   npm install
-   ```
+# ✨ Features
 
-2. Start the app
+## 🔐 Authentication
 
-   ```bash
-   npx expo start
-   ```
+- Owner Registration
+- Secure Login
+- JWT Authentication
+- Logout
+- Persistent Login using AsyncStorage
 
-In the output, you'll find options to open the app in a
+---
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## 📊 Dashboard
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+- Total Members
+- Total Trainers
+- Total Membership Plans
+- Total Revenue
+- Quick Navigation
 
-## Get a fresh project
+---
 
-When you're ready, run:
+## 👥 Member Management
 
-```bash
-npm run reset-project
+- View Members
+- Add Member
+- Assign Trainer
+- Assign Membership
+- Select Date of Birth
+- Responsive Form Validation
+
+---
+
+## 💪 Trainer Management
+
+- View Trainers
+- Add Trainer
+- Experience
+- Specialization
+
+---
+
+## 🏆 Membership Management
+
+- View Membership Plans
+- Add Membership
+- Duration
+- Price
+
+---
+
+## 📱 Modern UI
+
+- Responsive Design
+- Professional Cards
+- FlatList
+- Search Ready
+- Dropdown Selection
+- Date Picker
+- Loading States
+
+---
+
+# 🛠 Tech Stack
+
+- React Native
+- Expo
+- TypeScript
+- Expo Router
+- Axios
+- AsyncStorage
+- React Hooks
+- React Native Vector Icons
+
+---
+
+# 📂 Folder Structure
+
+```text
+app
+│
+├── (auth)
+│   ├── login.tsx
+│   └── register.tsx
+│
+├── (tabs)
+│   ├── dashboard.tsx
+│   ├── member.tsx
+│   ├── trainer.tsx
+│   └── membership.tsx
+│
+├── member
+│   └── add.tsx
+│
+├── trainer
+│   └── add.tsx
+│
+├── membership
+│   └── add.tsx
+│
+├── _layout.tsx
+└── index.tsx
+
+api
+│
+├── api.ts
+└── routes.ts
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+---
 
-### Other setup steps
+# 📱 Screens
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
+- Login
+- Register
+- Dashboard
+- Members
+- Add Member
+- Trainers
+- Add Trainer
+- Memberships
+- Add Membership
 
-## Learn more
+---
 
-To learn more about developing your project with Expo, look at the following resources:
+# 🖼️ Screenshots
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+## Login
 
-## Join the community
+![Login](./assets/login.png)
 
-Join our community of developers creating universal apps.
+---
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+## Register
+
+![Register](./assets/register.png)
+
+---
+
+## Dashboard
+
+![Dashboard](./assets/dashboard.png)
+
+---
+
+## Members
+
+![Members](./assets/members.png)
+
+---
+
+## Add Member
+
+![Add Member](./assets/add-member.png)
+
+---
+
+## Trainers
+
+![Trainers](./assets/trainers.png)
+
+---
+
+## Add Trainer
+
+![Add Trainer](./assets/add-trainer.png)
+
+---
+
+## Memberships
+
+![Memberships](./assets/memberships.png)
+
+---
+
+## Add Membership
+
+![Add Membership](./assets/add-membership.png)
+
+---
+
+# 🎥 Demo
+
+Add your demo GIF or YouTube video here.
+
+Example
+
+```
+https://youtu.be/your-demo-video
+```
+
+---
+
+# 🚀 Quick Start
+
+## Clone Repository
+
+```bash
+git clone https://github.com/yourusername/Gym_Management_Frontend.git
+```
+
+---
+
+## Install Dependencies
+
+```bash
+npm install
+```
+
+---
+
+## Start Expo
+
+```bash
+npx expo start
+```
+
+---
+
+## Run Android
+
+```bash
+npx expo run:android
+```
+
+---
+
+## Run iOS
+
+```bash
+npx expo run:ios
+```
+
+---
+
+# ⚙️ Environment Configuration
+
+Update your backend URL inside
+
+```text
+api/api.ts
+```
+
+Example
+
+```ts
+const api = axios.create({
+  baseURL: "http://YOUR_LOCAL_IP:3000/api",
+});
+```
+
+For Android Emulator
+
+```text
+http://10.0.2.2:3000/api
+```
+
+For Physical Device
+
+```text
+http://YOUR_WIFI_IP:3000/api
+```
+
+---
+
+# 🔑 Authentication
+
+JWT Token is securely stored using
+
+- AsyncStorage
+
+Every protected request automatically sends
+
+```http
+Authorization: Bearer <JWT_TOKEN>
+```
+
+---
+
+# 🌟 Future Improvements
+
+- Edit Member
+- Delete Member
+- Edit Trainer
+- Delete Trainer
+- Edit Membership
+- Delete Membership
+- Search
+- Pull To Refresh
+- Pagination
+- Charts
+- Push Notifications
+- Dark Mode
+- Docker Deployment
+- AWS Deployment
+
+---
+
+# 📚 Learning Outcomes
+
+Through this project I learned
+
+- React Native
+- Expo Router
+- TypeScript
+- API Integration
+- JWT Authentication
+- AsyncStorage
+- FlatList
+- useEffect
+- useState
+- Axios
+- Navigation
+- Form Handling
+- Dropdown Implementation
+- Date Picker Integration
+- Backend Communication
+
+---
+
+# 👨‍💻 Backend Repository
+
+```
+https://github.com/yourusername/Gym_Management_Backend
+```
+
+---
+
+# 👨‍💻 Author
+
+**Sidharth Chauhan**
+
+B.Tech Student
+
+Aspiring Backend Engineer
+
+GitHub: https://github.com/yourusername
+
+LinkedIn: https://linkedin.com/in/yourusername
+
+---
+
+## ⭐ If you like this project, consider giving it a Star!
