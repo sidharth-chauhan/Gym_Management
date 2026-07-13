@@ -119,7 +119,7 @@ api
 
 ## Login
 
-![](./assets/sample_image/1.pmg.png)
+![](./assets/sample_image/4.png)
 
 ---
 
@@ -129,37 +129,9 @@ api
 
 ---
 
-## Members
+## Membership
 
 ![](./assets/sample_image/3.png)
-
----
-
-## Trainers
-
-![](./assets/sample_image/4.png)
-
----
-
-## More Screens
-
-![](./assets/sample_image/image.png)
-
----
-
-![](./assets/sample_image/image%20copy.png)
-
----
-
-![](./assets/sample_image/image%20copy%202.png)
-
----
-
-![](./assets/sample_image/image%20copy%203.png)
-
----
-
-![](./assets/sample_image/image%20copy%204.png)
 
 ---
 
