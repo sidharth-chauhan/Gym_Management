@@ -58,7 +58,10 @@ const Trainer = () => {
 
         <View style={styles.header}>
 
-          <Pressable style={styles.iconButton}>
+          <Pressable 
+            onPress={()=>router.back()}
+            style={styles.iconButton}
+          >
             <Ionicons
               name="arrow-back"
               size={22}
