@@ -157,7 +157,10 @@ const AddMember = () => {
 
         <View style={styles.header}>
 
-          <Pressable style={styles.backButton}>
+          <Pressable 
+            onPress={()=>router.back()}
+            style={styles.backButton}
+          >
             <Ionicons
               name="arrow-back"
               size={22}
