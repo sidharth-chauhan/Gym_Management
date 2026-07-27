@@ -1,7 +1,9 @@
 import { Ionicons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { router } from "expo-router";
 import { useEffect, useState } from "react";
 import {
+  Modal,
   Pressable,
   SafeAreaView,
   ScrollView,
@@ -16,6 +18,7 @@ const Index = () => {
   const [dashboard, setDashboard] = useState([])
   const [profile,setProfile] = useState([])
   const [loading, setLoading] = useState(false)
+  const [logoutModal, setLogoutModal] = useState(false);
 
    const fetchDashborad=async()=>{
     setLoading(true)
@@ -52,167 +55,235 @@ const Index = () => {
     fetchDashborad()
    },[])
 
+   const handleLogout= async()=>{
+    try{
+      await AsyncStorage.removeItem("token");
+      console.log("Token removed successfully");
+      router.replace("/login");
+
+
+    }catch(error){
+      console.log(error);
+    }
+   }
+
   return (
-    <SafeAreaView style={styles.container}>
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingBottom: 30 }}
+    <>
+      <SafeAreaView style={styles.container}>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ paddingBottom: 30 }}
+        >
+
+          {/* ================= HEADER ================= */}
+
+          <View style={styles.header}>
+            <Pressable style={styles.iconButton}>
+              <Ionicons name="menu" size={26} color="#1E3A8A" />
+            </Pressable>
+
+            <Text style={styles.headerTitle}>Dashboard</Text>
+
+            <Pressable
+              onPress={()=> setLogoutModal(true)}
+            >
+              <Ionicons
+
+                name="log-out-outline"
+                size={20}
+                color="red"
+              >
+                <Text>logout</Text>
+              </Ionicons>
+            </Pressable>
+          </View>
+
+          {/* ================= WELCOME ================= */}
+
+          <View style={styles.welcomeCard}>
+            <Text style={styles.welcomeText}>Welcome Back 👋</Text>
+
+            <Text style={styles.gymName}>
+              {profile?.user?.gymName}
+            </Text>
+
+            <Text style={styles.subtitle}>
+              Here's today's overview of your gym.
+            </Text>
+          </View>
+
+          {/* ================= OVERVIEW ================= */}
+
+          <Text style={styles.sectionTitle}>
+            Overview
+          </Text>
+
+          <View style={styles.cardRow}>
+
+            <View style={styles.statCard}>
+              <View style={styles.iconCircle}>
+                <Ionicons
+                  name="people"
+                  size={24}
+                  color="#2563EB"
+                />
+              </View>
+
+              <Text style={styles.statNumber}>
+                {dashboard?.data?.membersCount}
+              </Text>
+
+              <Text style={styles.statLabel}>
+                Members
+              </Text>
+            </View>
+
+            <View style={styles.statCard}>
+              <View style={styles.iconCircle}>
+                <Ionicons
+                  name="barbell"
+                  size={24}
+                  color="#2563EB"
+                />
+              </View>
+
+              <Text style={styles.statNumber}>
+                {dashboard?.data?.trainersCount}
+              </Text>
+
+              <Text style={styles.statLabel}>
+                Trainers
+              </Text>
+            </View>
+
+          </View>
+
+          <View style={styles.cardRow}>
+
+            <View style={styles.statCard}>
+              <View style={styles.iconCircle}>
+                <Ionicons
+                  name="card"
+                  size={24}
+                  color="#2563EB"
+                />
+              </View>
+
+              <Text style={styles.statNumber}>
+                {dashboard?.data?.membershipsCount}
+              </Text>
+
+              <Text style={styles.statLabel}>
+                Memberships
+              </Text>
+            </View>
+
+            <View style={styles.statCard}>
+              <View style={styles.iconCircle}>
+                <Ionicons
+                  name="cash"
+                  size={24}
+                  color="#2563EB"
+                />
+              </View>
+
+              <Text style={styles.statNumber}>
+                {dashboard?.data?.totalRevenue}
+              </Text>
+
+              <Text style={styles.statLabel}>
+                Revenue
+              </Text>
+            </View>
+
+          </View>
+
+          {/* ================= REVENUE ================= */}
+
+          <Text style={styles.sectionTitle}>
+            Total Revenue
+          </Text>
+
+          <View style={styles.revenueCard}>
+
+            <View>
+              <Text style={styles.revenueLabel}>
+                Total Revenue
+              </Text>
+
+              <Text style={styles.revenueAmount}>
+                {dashboard?.data?.totalRevenue}
+              </Text>
+            </View>
+
+            <View style={styles.growthBadge}>
+              <Ionicons
+                name="trending-up"
+                size={18}
+                color="#16A34A"
+              />
+
+              <Text style={styles.growthText}>
+                
+              </Text>
+            </View>
+
+          </View>
+
+          {/* ======= PART 2 STARTS FROM HERE ======= */}
+
+        </ScrollView>
+      </SafeAreaView>
+      <Modal
+        visible={logoutModal}
+        transparent
+        animationType="fade"
       >
+        <View style={styles.modalOverlay}>
 
-        {/* ================= HEADER ================= */}
+          <View style={styles.modalContainer}>
 
-        <View style={styles.header}>
-          <Pressable style={styles.iconButton}>
-            <Ionicons name="menu" size={26} color="#1E3A8A" />
-          </Pressable>
-
-          <Text style={styles.headerTitle}>Dashboard</Text>
-
-          <Pressable style={styles.iconButton}>
             <Ionicons
-              name="notifications-outline"
-              size={24}
-              color="#1E3A8A"
-            />
-          </Pressable>
-        </View>
-
-        {/* ================= WELCOME ================= */}
-
-        <View style={styles.welcomeCard}>
-          <Text style={styles.welcomeText}>Welcome Back 👋</Text>
-
-          <Text style={styles.gymName}>
-            {profile?.user?.gymName}
-          </Text>
-
-          <Text style={styles.subtitle}>
-            Here's today's overview of your gym.
-          </Text>
-        </View>
-
-        {/* ================= OVERVIEW ================= */}
-
-        <Text style={styles.sectionTitle}>
-          Overview
-        </Text>
-
-        <View style={styles.cardRow}>
-
-          <View style={styles.statCard}>
-            <View style={styles.iconCircle}>
-              <Ionicons
-                name="people"
-                size={24}
-                color="#2563EB"
-              />
-            </View>
-
-            <Text style={styles.statNumber}>
-              {dashboard?.data?.membersCount}
-            </Text>
-
-            <Text style={styles.statLabel}>
-              Members
-            </Text>
-          </View>
-
-          <View style={styles.statCard}>
-            <View style={styles.iconCircle}>
-              <Ionicons
-                name="barbell"
-                size={24}
-                color="#2563EB"
-              />
-            </View>
-
-            <Text style={styles.statNumber}>
-              {dashboard?.data?.trainersCount}
-            </Text>
-
-            <Text style={styles.statLabel}>
-              Trainers
-            </Text>
-          </View>
-
-        </View>
-
-        <View style={styles.cardRow}>
-
-          <View style={styles.statCard}>
-            <View style={styles.iconCircle}>
-              <Ionicons
-                name="card"
-                size={24}
-                color="#2563EB"
-              />
-            </View>
-
-            <Text style={styles.statNumber}>
-              {dashboard?.data?.membershipsCount}
-            </Text>
-
-            <Text style={styles.statLabel}>
-              Memberships
-            </Text>
-          </View>
-
-          <View style={styles.statCard}>
-            <View style={styles.iconCircle}>
-              <Ionicons
-                name="cash"
-                size={24}
-                color="#2563EB"
-              />
-            </View>
-
-            <Text style={styles.statNumber}>
-              {dashboard?.data?.totalRevenue}
-            </Text>
-
-            <Text style={styles.statLabel}>
-              Revenue
-            </Text>
-          </View>
-
-        </View>
-
-        {/* ================= REVENUE ================= */}
-
-        <Text style={styles.sectionTitle}>
-          Total Revenue
-        </Text>
-
-        <View style={styles.revenueCard}>
-
-          <View>
-            <Text style={styles.revenueLabel}>
-              Total Revenue
-            </Text>
-
-            <Text style={styles.revenueAmount}>
-              {dashboard?.data?.totalRevenue}
-            </Text>
-          </View>
-
-          <View style={styles.growthBadge}>
-            <Ionicons
-              name="trending-up"
-              size={18}
-              color="#16A34A"
+              name="log-out-outline"
+              size={40}
+              color="red"
             />
 
-            <Text style={styles.growthText}>
-              
+            <Text style={styles.modalTitle}>
+              Logout
             </Text>
+
+            <Text style={styles.modalText}>
+              Are you sure you want to logout?
+            </Text>
+
+            <View style={styles.modalButtonContainer}>
+
+              <Pressable
+                style={styles.cancelButton}
+                onPress={() => setLogoutModal(false)}
+              >
+                <Text style={styles.cancelButtonText}>
+                  Cancel
+                </Text>
+              </Pressable>
+
+              <Pressable
+                style={styles.logoutButton}
+                onPress={handleLogout}
+              >
+                <Text style={styles.logoutButtonText}>
+                  Logout
+                </Text>
+              </Pressable>
+
+            </View>
+
           </View>
 
         </View>
-
-        {/* ======= PART 2 STARTS FROM HERE ======= */}
-
-      </ScrollView>
-    </SafeAreaView>
+      </Modal>
+    </>
   );
 };
 
@@ -424,6 +495,64 @@ const styles = StyleSheet.create({
 
     color: "#16A34A",
 
+    fontWeight: "700",
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: "rgba(0,0,0,0.5)",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  modalContainer: {
+    width: "85%",
+    backgroundColor: "#fff",
+    borderRadius: 20,
+    padding: 24,
+    alignItems: "center",
+  },
+
+  modalTitle: {
+    fontSize: 22,
+    fontWeight: "700",
+    marginTop: 10,
+  },
+
+  modalText: {
+    marginTop: 12,
+    textAlign: "center",
+    color: "#6B7280",
+    fontSize: 16,
+  },
+
+  modalButtonContainer: {
+    flexDirection: "row",
+    marginTop: 25,
+  },
+
+  cancelButton: {
+    flex: 1,
+    padding: 14,
+    borderRadius: 10,
+    backgroundColor: "#E5E7EB",
+    marginRight: 10,
+    alignItems: "center",
+  },
+
+  logoutButton: {
+    flex: 1,
+    padding: 14,
+    borderRadius: 10,
+    backgroundColor: "#EF4444",
+    alignItems: "center",
+  },
+
+  cancelButtonText: {
+    fontWeight: "600",
+  },
+
+  logoutButtonText: {
+    color: "#fff",
     fontWeight: "700",
   },
 });
